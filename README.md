@@ -1,66 +1,194 @@
 AI Supply Chain Control Center
 
-An AI-powered supply chain operations platform for monitoring orders, inventory, shipments, suppliers, exceptions, and operational risk from a unified control center.
+<p align="center">
+  <strong>AI-powered operational intelligence for modern supply chains</strong>
+</p>
 
-The system combines a React frontend, TypeScript/Express backend, PostgreSQL database through Prisma, and an asynchronous risk-analysis worker to detect supply-chain problems and generate actionable risk insights.
+<p align="center">
+  Monitor orders, inventory, shipments, suppliers, exceptions, and supply-chain risk from one unified control center.
+</p>
 
-Features
+<p align="center">
+  <img src="https://img.shields.io/badge/Frontend-React%20%2B%20TypeScript-61DAFB?logo=react&logoColor=white" alt="React">
+  <img src="https://img.shields.io/badge/Backend-Node.js%20%2B%20Express-339933?logo=node.js&logoColor=white" alt="Node.js">
+  <img src="https://img.shields.io/badge/Database-PostgreSQL-4169E1?logo=postgresql&logoColor=white" alt="PostgreSQL">
+  <img src="https://img.shields.io/badge/ORM-Prisma-2D3748?logo=prisma&logoColor=white" alt="Prisma">
+  <img src="https://img.shields.io/badge/Language-TypeScript-3178C6?logo=typescript&logoColor=white" alt="TypeScript">
+</p>
 
-Secure authentication with role-based authorization
+<p align="center">
+  <img src="https://img.shields.io/badge/API-REST-6E56CF" alt="REST API">
+  <img src="https://img.shields.io/badge/Architecture-Event--Driven-8B5CF6" alt="Event Driven">
+  <img src="https://img.shields.io/badge/Risk%20Analysis-Asynchronous-F59E0B" alt="Asynchronous Risk Analysis">
+</p>
 
-Supply-chain operations dashboard
+Overview
 
-Order management and tracking
+AI Supply Chain Control Center is a full-stack supply-chain operations platform designed to turn operational data into actionable risk intelligence.
 
-Shipment tracking and status management
+Instead of treating orders, inventory, shipments, suppliers, and exceptions as isolated modules, the system connects them into a single operational workflow:
 
-Inventory monitoring
+Orders
+   │
+   ├──────────────┐
+   │              │
+   ▼              ▼
+Shipments      Inventory
+   │              │
+   └──────┬───────┘
+          │
+          ▼
+   Exception Detection
+          │
+          ▼
+     Risk Analysis
+          │
+          ├── Risk Score
+          ├── Severity
+          ├── Risk Factors
+          └── Recommended Actions
+          │
+          ▼
+   Operations Control Center
 
-Warehouse and product management
+The application combines:
 
-Supplier management
+React + TypeScript frontend
+
+Node.js + Express REST API
+
+PostgreSQL database
+
+Prisma ORM
+
+Authentication and role-based authorization
+
+Asynchronous background risk-analysis worker
+
+Queue-based event processing
 
 Automated exception detection
 
-Exception resolution workflow
+Risk scoring and recommendations
 
-AI-driven supply-chain risk analysis
+Key Capabilities
 
-Risk scoring and severity classification
+📦 Order Management
 
-Risk factors and recommendations
+Monitor customer orders and their operational status.
 
-Asynchronous background risk-analysis jobs
+The order workflow is connected to shipment and inventory information so that downstream operational problems can contribute to order-level risk.
 
-Risk-analysis history
+🚚 Shipment Tracking
 
-Duplicate exception prevention
+Track shipments using dedicated tracking records.
 
-REST API architecture
+Shipment status changes can trigger downstream risk analysis:
 
-Prisma ORM with database migrations
+Shipment Status Updated
+          │
+          ▼
+      Risk Queue
+          │
+          ▼
+    Risk Worker
+          │
+          ▼
+  Risk Analysis Result
 
-AI Risk Analysis
+📊 Inventory Monitoring
 
-The platform evaluates multiple operational signals to estimate order and supply-chain risk.
+The inventory module provides visibility into:
 
-Risk signals include:
+Product
+
+Warehouse
+
+Quantity
+
+Reserved stock
+
+Available stock
+
+Inventory status
+
+Available inventory is calculated from physical quantity and reserved quantity:
+
+Available Stock = Quantity - Reserved
+
+The system can identify inventory levels that fall below a warehouse/product warning threshold.
+
+🏭 Supplier Management
+
+Supplier records contain operational information such as:
+
+Supplier name
+
+Email
+
+Phone
+
+Reliability
+
+Supplied products
+
+Unit cost
+
+Lead time
+
+Supplier-product relationships allow the platform to associate products with sourcing information.
+
+⚠️ Exception Management
+
+The Exceptions module provides an operational queue for problems that require attention.
+
+Supported exception scenarios include:
+
+Low inventory
+
+Shipment delays
+
+Orders at risk
+
+Other detected supply-chain exceptions
+
+Each exception can contain:
+
+Type
+
+Severity
+
+Risk score
+
+Status
+
+Creation timestamp
+
+Risk description
+
+Exceptions can be inspected and resolved directly from the control center.
+
+🤖 AI Risk Analysis
+
+The risk-analysis system evaluates multiple operational signals instead of looking at a single field in isolation.
+
+Risk factors can include:
 
 Inventory availability
 
-Shipment status and delays
+Shipment delays
 
 Supplier reliability
 
 Order deadlines
 
-Active supply-chain exceptions
+Existing supply-chain exceptions
 
-The system produces:
+The resulting analysis contains:
 
 Risk score
 
-Risk severity
+Severity
 
 Risk factors
 
@@ -68,74 +196,201 @@ Recommended actions
 
 Analysis history
 
-Risk severity is classified as:
+Risk Scoring
 
-Risk Score
+Risk scores are represented on a 0–100 scale.
+
+Score
 
 Severity
 
+Meaning
+
 0–39
 
-LOW
+🟢 LOW
+
+Low operational risk
 
 40–69
 
-MEDIUM
+🟡 MEDIUM
+
+Moderate risk requiring monitoring
 
 70–89
 
-HIGH
+🟠 HIGH
+
+Significant operational risk
 
 90–100
 
-CRITICAL
+🔴 CRITICAL
+
+Immediate attention required
+
+Example:
+
+Risk Score: 75
+Severity: HIGH
+
+Risk Factors:
+- Critical inventory shortage
+- Delayed shipment
+- Order identified as at risk
+
+Recommended Actions:
+- Replenish inventory
+- Expedite delayed shipment
+- Prioritize the affected order
+- Escalate with supplier
+
+The important part of the system is not only producing a number. The platform explains why the risk exists and provides operational actions that can be taken.
 
 Exception Detection
 
-The platform automatically detects operational exceptions such as:
+The exception engine converts operational conditions into actionable exceptions.
 
-Low inventory
+For example:
 
-Shipment delays
+Inventory
+Quantity       = 100
+Reserved       = 55
+Available      = 45
+Warning Level  = 2000
 
-Supplier reliability problems
+            ↓
 
-Orders at risk
+LOW INVENTORY EXCEPTION
+            ↓
+Severity: CRITICAL
+            ↓
+Risk Analysis
+            ↓
+Recommended Action:
+Replenish inventory
 
-Exceptions can be reviewed and resolved from the control center.
+The system also avoids repeatedly creating the same unresolved inventory exception for the same product and warehouse.
 
-The detection system also prevents repeatedly creating the same unresolved inventory exception for the same product and warehouse.
+This prevents a detection job from generating an uncontrolled number of duplicate exceptions.
+
+Event-Driven Risk Analysis
+
+A central part of the architecture is the asynchronous risk-analysis workflow.
+
+When an important operational event occurs, the API can enqueue a risk-analysis job rather than performing the complete analysis inside the HTTP request.
+
+┌──────────────────┐
+│   React Client   │
+└────────┬─────────┘
+         │
+         │ REST API
+         ▼
+┌──────────────────┐
+│  Express Server  │
+└────────┬─────────┘
+         │
+         │ Event
+         ▼
+┌──────────────────┐
+│    Risk Queue    │
+└────────┬─────────┘
+         │
+         │ Background Job
+         ▼
+┌──────────────────┐
+│   Risk Worker    │
+└────────┬─────────┘
+         │
+         │ Analysis
+         ▼
+┌──────────────────┐
+│ Risk Factors +   │
+│ Score + Actions  │
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│    Database      │
+└──────────────────┘
+
+This separation keeps the main API responsive while the heavier risk-analysis work is handled asynchronously.
 
 Architecture
 
-                    ┌─────────────────────────┐
-                    │     React Frontend      │
-                    │      TypeScript         │
-                    └────────────┬────────────┘
-                                 │
-                                 │ REST API
-                                 ▼
-                    ┌─────────────────────────┐
-                    │   Express API Server    │
-                    │       TypeScript        │
-                    └───────┬─────────┬───────┘
-                            │         │
-                     Prisma │         │ Redis / Queue
-                            │         ▼
-                            │   ┌───────────────┐
-                            │   │ Risk Analysis │
-                            │   │    Worker     │
-                            │   └───────────────┘
-                            │
-                            ▼
-                    ┌─────────────────────────┐
-                    │      PostgreSQL         │
-                    │        Database         │
-                    └─────────────────────────┘
+                         ┌──────────────────────────┐
+                         │       React Client       │
+                         │     TypeScript + Vite    │
+                         └────────────┬─────────────┘
+                                      │
+                                      │ HTTP / REST
+                                      ▼
+                         ┌──────────────────────────┐
+                         │      Express API         │
+                         │       TypeScript         │
+                         └────────────┬─────────────┘
+                                      │
+                         ┌────────────┴────────────┐
+                         │                         │
+                         │ Prisma                  │ Events
+                         ▼                         ▼
+              ┌─────────────────────┐   ┌─────────────────────┐
+              │     PostgreSQL      │   │    Risk Queue       │
+              │       Database      │   └──────────┬──────────┘
+              └─────────────────────┘              │
+                                                   │
+                                                   ▼
+                                      ┌─────────────────────────┐
+                                      │     Risk Analysis       │
+                                      │         Worker          │
+                                      │      TypeScript         │
+                                      └────────────┬────────────┘
+                                                   │
+                                                   │ Results
+                                                   ▼
+                                      ┌─────────────────────────┐
+                                      │       PostgreSQL        │
+                                      │ Risk Analysis History   │
+                                      └─────────────────────────┘
 
-Tech Stack
+Application Modules
+
+Module
+
+Purpose
+
+Dashboard
+
+Operational overview
+
+Orders
+
+Order monitoring and risk context
+
+Shipments
+
+Shipment tracking and status updates
+
+Inventory
+
+Warehouse stock monitoring
+
+Suppliers
+
+Supplier reliability and sourcing
+
+Exceptions
+
+Detection, investigation, and resolution
+
+AI Risk Analysis
+
+Risk scores, factors, actions, and history
 
 Frontend
+
+The frontend is implemented with:
 
 React
 
@@ -145,56 +400,267 @@ Vite
 
 CSS
 
+The main application provides navigation across the operational modules and displays backend data through authenticated API requests.
+
+The interface includes operational dashboards, tables, status indicators, filters, detail panels, risk scores, exception states, and action controls.
+
 Backend
 
-Node.js
+The backend is a TypeScript/Express REST API.
 
-Express
+The server is organized into:
 
-TypeScript
+server/
+└── src/
+    ├── config/
+    ├── controllers/
+    ├── middleware/
+    ├── queues/
+    ├── routes/
+    ├── services/
+    ├── types/
+    ├── utils/
+    ├── app.ts
+    └── server.ts
 
-REST APIs
+The backend follows a layered structure:
 
-JWT authentication
+Route
+  ↓
+Middleware
+  ↓
+Controller
+  ↓
+Service
+  ↓
+Prisma
+  ↓
+PostgreSQL
 
-Role-based authorization
+This keeps HTTP handling, authorization, business logic, and persistence concerns separated.
+
+Worker
+
+The worker is responsible for asynchronous risk-analysis processing.
+
+worker/
+└── src/
+    ├── config/
+    ├── queues/
+    ├── services/
+    ├── workers/
+    └── index.ts
+
+The worker receives risk-analysis jobs and evaluates the relevant supply-chain information before persisting the resulting analysis.
+
+Authentication & Authorization
+
+The API uses authenticated requests and role-based authorization.
+
+Protected operations can require specific roles such as:
+
+ADMIN
+
+MANAGER
+
+Examples of protected administrative operations include:
+
+Creating inventory
+
+Updating inventory
+
+Reserving inventory
+
+Releasing inventory
+
+Creating suppliers
+
+Updating suppliers
+
+Deleting suppliers
+
+Running exception detection
+
+Resolving exceptions
+
+Read operations can be protected by authentication without requiring elevated permissions.
+
+API Structure
+
+The backend exposes REST endpoints grouped by business domain.
+
+/api/auth
+/api/customers
+/api/orders
+/api/products
+/api/shipments
+/api/inventory
+/api/warehouses
+/api/suppliers
+/api/exceptions
+
+Representative operations include:
+
+GET    /api/inventory
+GET    /api/inventory/:id
+POST   /api/inventory
+PUT    /api/inventory/:id
+
+POST   /api/inventory/:id/reserve
+POST   /api/inventory/:id/release
+
+GET    /api/suppliers
+GET    /api/suppliers/:id
+POST   /api/suppliers
+PUT    /api/suppliers/:id
+DELETE /api/suppliers/:id
+
+GET    /api/exceptions
+GET    /api/exceptions/:id
+POST   /api/exceptions/detect
+PATCH  /api/exceptions/:id/resolve
+
+The exact API contract is implemented in the route, controller, and service layers.
 
 Database
 
-PostgreSQL
+The project uses PostgreSQL with Prisma ORM.
 
-Prisma ORM
+The database contains the core entities required to represent the supply-chain domain, including concepts such as:
 
-Prisma migrations
+Customer
+Order
+Product
+Warehouse
+Inventory
+Supplier
+SupplierProduct
+Shipment
+Exception
+Risk Analysis
 
-Background Processing
+Prisma migrations are stored under:
 
-Node.js
+server/prisma/migrations/
 
-TypeScript
+The Prisma schema is located at:
 
-Queue-based asynchronous risk analysis
+server/prisma/schema.prisma
+
+Inventory Risk Example
+
+A low-stock condition can flow through the complete platform:
+
+Warehouse
+   │
+   └── Inventory
+          │
+          ├── Product: LAPTOP-001
+          ├── Quantity: 100
+          ├── Reserved: 55
+          └── Available: 45
+                    │
+                    ▼
+            Below Warning Level
+                    │
+                    ▼
+          Exception Detection
+                    │
+                    ▼
+          Inventory Shortage
+                    │
+                    ▼
+             Risk Analysis
+                    │
+                    ├── Score
+                    ├── Severity
+                    ├── Factors
+                    └── Actions
+
+This connects the operational data layer to the intelligence layer.
+
+Shipment Risk Example
+
+A shipment status change can trigger risk analysis:
+
+Shipment
+   │
+   ├── Tracking Number
+   ├── Order
+   ├── Customer
+   ├── Supplier
+   └── Status
+          │
+          ▼
+  STATUS_UPDATED EVENT
+          │
+          ▼
+      Risk Queue
+          │
+          ▼
+      Risk Worker
+          │
+          ▼
+   Risk Analysis
+
+For a delayed shipment, the analysis can identify:
+
+SHIPMENT_DELAY
+
+and recommend actions such as:
+
+Expedite the shipment
+
+Monitor delivery
+
+Escalate with the supplier
+
+Prioritize the affected order
+
+Exception Lifecycle
+
+Exceptions follow a simple operational lifecycle:
+
+                    ┌──────────┐
+                    │ DETECTED │
+                    └────┬─────┘
+                         │
+                         ▼
+                    ┌──────────┐
+                    │   OPEN   │
+                    └────┬─────┘
+                         │
+                  Investigation
+                         │
+                         ▼
+                    ┌──────────┐
+                    │ RESOLVED │
+                    └──────────┘
+
+The UI provides separate visibility for open and resolved exceptions.
 
 Project Structure
 
 AI_Supply_Chain/
 │
 ├── client/
+│   ├── public/
 │   ├── src/
+│   │   ├── assets/
 │   │   ├── App.tsx
 │   │   ├── App.css
 │   │   ├── ExceptionPage.tsx
 │   │   ├── ExceptionPage.css
 │   │   ├── InventoryPage.tsx
-│   │   └── SupplierPage.tsx
+│   │   ├── SupplierPage.tsx
+│   │   └── ...
 │   ├── package.json
 │   └── vite.config.ts
 │
 ├── server/
 │   ├── prisma/
-│   │   ├── schema.prisma
-│   │   └── migrations/
-│   │
+│   │   ├── migrations/
+│   │   └── schema.prisma
 │   ├── src/
 │   │   ├── config/
 │   │   ├── controllers/
@@ -203,54 +669,29 @@ AI_Supply_Chain/
 │   │   ├── routes/
 │   │   ├── services/
 │   │   ├── types/
-│   │   └── utils/
-│   │
+│   │   ├── utils/
+│   │   ├── app.ts
+│   │   └── server.ts
 │   └── package.json
 │
 ├── worker/
-│   ├── prisma/
 │   ├── src/
 │   │   ├── config/
 │   │   ├── queues/
 │   │   ├── services/
-│   │   └── workers/
-│   │
+│   │   ├── workers/
+│   │   └── index.ts
 │   └── package.json
 │
+├── docs/
+├── .gitignore
 └── README.md
-
-Core Workflow
-
-Order Created
-     │
-     ▼
-Inventory / Supplier / Shipment Monitoring
-     │
-     ▼
-Operational Event
-     │
-     ├───────────────┐
-     ▼               ▼
-Exception       Risk Analysis Job
-Detection             │
-     │                ▼
-     │          Risk Calculation
-     │                │
-     │                ▼
-     └──────────► Risk Result
-                       │
-                       ▼
-                Control Center
-                       │
-              ┌────────┴────────┐
-              ▼                 ▼
-        Risk Factors       Recommendations
 
 Local Development
 
 Prerequisites
 
-Make sure the following are installed:
+Install the following before running the project:
 
 Node.js
 
@@ -260,224 +701,391 @@ PostgreSQL
 
 Git
 
-Clone
+The asynchronous worker also requires the queue infrastructure configured for the project.
+
+1. Clone the Repository
 
 git clone https://github.com/UtkarshRode/ai-supply-chain-control-center.git
 cd ai-supply-chain-control-center
 
-Backend
+2. Install Frontend Dependencies
+
+cd client
+npm install
+
+3. Install Backend Dependencies
+
+Open another terminal:
 
 cd server
 npm install
 
-Create a .env file using the required environment variables.
-
-Run database migrations:
-
-npx prisma migrate dev
-
-Start the backend:
-
-npm run dev
-
-The API runs on:
-
-http://localhost:5000
-
-Worker
+4. Install Worker Dependencies
 
 Open another terminal:
 
 cd worker
 npm install
-npm run dev
 
-The worker processes asynchronous risk-analysis jobs.
+5. Configure Environment Variables
+
+Create the required environment files from the environment variables expected by each application.
+
+Do not commit secrets.
+
+The repository ignores:
+
+.env
+.env.*
+
+while allowing example environment files:
+
+.env.example
+
+A production deployment should provide secrets through the deployment platform rather than committing them to Git.
+
+Running the Application
+
+The application consists of three processes:
 
 Frontend
+Backend API
+Risk Worker
 
-Open another terminal:
+Start each process using the scripts defined in its respective package.json.
 
-cd client
-npm install
-npm run dev
+Typical development layout:
 
-The frontend runs on the Vite development server.
+Terminal 1 → client
+Terminal 2 → server
+Terminal 3 → worker
 
-Environment Variables
+The frontend development server runs separately from the backend API.
 
-Never commit real credentials or secrets.
+The backend exposes a health endpoint:
 
-Example configuration:
+GET /api/health
 
-DATABASE_URL=your_database_connection_string
-JWT_SECRET=your_jwt_secret
-REDIS_URL=your_redis_connection_string
+Example:
 
-Use .env.example to document required variables without exposing real credentials.
+curl http://localhost:5000/api/health
 
-API Modules
+Expected response:
 
-The backend provides REST endpoints for:
+{
+  "success": true,
+  "message": "AI Supply Chain API is running"
+}
+
+Development Workflow
+
+A typical operational flow through the application is:
+
+1. Create / inspect supply-chain data
+              ↓
+2. Monitor inventory, orders and shipments
+              ↓
+3. Update operational status
+              ↓
+4. Generate an event
+              ↓
+5. Queue risk-analysis job
+              ↓
+6. Worker performs analysis
+              ↓
+7. Risk score and factors are stored
+              ↓
+8. Exception is displayed in the control center
+              ↓
+9. Operator investigates the issue
+              ↓
+10. Exception is resolved
+
+Example Operational Scenario
+
+Consider a laptop shipment handled by a supplier.
+
+Product
+LAPTOP-001
+        │
+        ▼
+Mumbai Central Warehouse
+        │
+        ▼
+Available Inventory becomes critically low
+        │
+        ▼
+Inventory Exception
+        │
+        ▼
+Risk Analysis
+        │
+        ├── Inventory shortage
+        ├── Shipment delay
+        └── Order at risk
+        │
+        ▼
+HIGH / CRITICAL RISK
+        │
+        ▼
+Recommended Actions
+        ├── Replenish inventory
+        ├── Expedite shipment
+        ├── Prioritize order
+        └── Escalate with supplier
+
+This demonstrates the main idea of the platform:
+
+Operational events → detected exceptions → explainable risk → recommended action
+
+Design Principles
+
+Separation of Concerns
+
+Routes, controllers, services, database access, and workers are separated into dedicated layers.
+
+Explainable Risk
+
+The system does not stop at a risk score. It surfaces the underlying factors and recommended actions.
+
+Asynchronous Processing
+
+Risk analysis is separated from the request-response path through a background worker.
+
+Role-Based Operations
+
+Sensitive mutations are protected by authentication and role-based authorization.
+
+Duplicate Prevention
+
+Exception detection is designed to avoid repeatedly creating the same unresolved inventory exception.
+
+Operational Focus
+
+The UI is designed around the decisions an operations user needs to make:
+
+What is wrong?
+Why is it risky?
+How severe is it?
+What should I do?
+Has the issue been resolved?
+
+Security Considerations
+
+The repository is configured to avoid committing common secret and generated files.
+
+Ignored files include:
+
+node_modules/
+.env
+.env.*
+dist/
+build/
+coverage/
+.vscode/
+*.log
+.DS_Store
+
+Production deployments should additionally use:
+
+Strong secret values
+
+HTTPS
+
+Secure database credentials
+
+Proper JWT configuration
+
+Restricted database access
+
+Production CORS configuration
+
+Secure queue credentials
+
+Environment-specific configuration
+
+Current Status
+
+The current implementation includes the core operational control-center workflow:
+
+React frontend
+
+TypeScript frontend
+
+Express backend
+
+PostgreSQL + Prisma
 
 Authentication
 
-Customers
+Role-based authorization
 
-Products
+Orders module
 
-Orders
+Shipments module
 
-Shipments
+Inventory module
 
-Inventory
+Supplier module
 
-Suppliers
-
-Warehouses
-
-Exceptions
-
-Risk analysis
-
-Protected endpoints require authentication, while administrative operations additionally use role-based authorization.
-
-Background Risk Processing
-
-Risk analysis is handled asynchronously rather than blocking the API request.
-
-For example:
-
-Shipment Status Updated
-          │
-          ▼
-      Risk Queue
-          │
-          ▼
-     Worker receives job
-          │
-          ▼
-   Risk Analysis Service
-          │
-          ▼
-   Risk Analysis Saved
-
-This allows operational API requests to remain responsive while risk calculations are processed independently.
-
-Exception Lifecycle
-
-Operational Problem
-        │
-        ▼
-Exception Detection
-        │
-        ▼
-Open Exception
-        │
-        ▼
-Review in Control Center
-        │
-        ▼
-Resolve Exception
-
-Risk Analysis Lifecycle
-
-Shipment / Inventory / Supplier / Order Event
-                    │
-                    ▼
-               Risk Queue
-                    │
-                    ▼
-              Worker Process
-                    │
-                    ▼
-             Risk Calculation
-                    │
-                    ▼
-          Risk Score + Severity
-                    │
-                    ▼
-          Factors + Recommendations
-                    │
-                    ▼
-             Control Center
-
-Validation
-
-The project has been tested across the main operational workflows:
-
-Authentication
-
-Orders
-
-Shipments
-
-Inventory
-
-Suppliers
-
-Exceptions
+Exception module
 
 Exception detection
 
 Exception resolution
 
-Risk analysis
+Risk-analysis worker
 
-Background risk-analysis jobs
+Queue-based risk-analysis processing
 
-Frontend, backend, and worker production builds complete successfully.
+Risk scoring
 
-Security
+Risk severity classification
 
-The repository excludes:
+Risk factors
 
-Environment files
+Recommended actions
 
-Node modules
+Risk-analysis history
 
-Build output
+Duplicate exception prevention
 
-Logs
+GitHub repository
 
-Local editor configuration
+Roadmap
 
-Real credentials and secrets should never be committed to the repository.
+Potential future improvements include:
 
-Future Improvements
+Production deployment
 
-Potential future enhancements include:
+Automated CI/CD pipeline
 
-Real-time WebSocket notifications
+Automated test suite
 
-Advanced demand forecasting
+API documentation with OpenAPI / Swagger
 
-Predictive supplier failure modeling
+More advanced supplier-risk models
 
-Route optimization
+Demand forecasting
 
-Automated replenishment recommendations
+Inventory replenishment forecasting
 
-Historical risk trend visualization
+Shipment ETA prediction
 
-Cloud deployment
+Notification and alert system
 
-Monitoring and observability
+Real-time operational updates
 
-More advanced ML-based risk prediction
+Advanced analytics and trend visualizations
 
-License
+Model-based risk prediction using historical data
 
-This project is available under the MIT License.
+Audit logging
+
+Production observability and monitoring
+
+Why This Project?
+
+Traditional supply-chain dashboards often show operational data without connecting the information into a decision-making workflow.
+
+This project focuses on the connection:
+
+DATA
+ ↓
+OPERATIONS
+ ↓
+EVENTS
+ ↓
+EXCEPTIONS
+ ↓
+RISK
+ ↓
+RECOMMENDATIONS
+ ↓
+ACTION
+
+The goal is to provide an operations team with a single place to understand both the current state of the supply chain and the problems that require attention.
+
+Technology Stack
+
+Category
+
+Technology
+
+Frontend
+
+React
+
+Frontend Language
+
+TypeScript
+
+Frontend Build Tool
+
+Vite
+
+Backend
+
+Node.js
+
+API Framework
+
+Express
+
+Backend Language
+
+TypeScript
+
+Database
+
+PostgreSQL
+
+ORM
+
+Prisma
+
+Background Processing
+
+TypeScript Worker
+
+Queue
+
+Redis / Queue infrastructure
+
+Authentication
+
+JWT-based authentication
+
+API Style
+
+REST
+
+Version Control
+
+Git + GitHub
+
+Repository
+
+GitHub:
+
+AI Supply Chain Control Center
+
+https://github.com/UtkarshRode/ai-supply-chain-control-center
 
 Author
 
 Utkarsh Rode
 
-GitHub:
+Built as a full-stack AI-oriented supply-chain operations and risk-intelligence project.
 
-https://github.com/UtkarshRode
+License
 
-Repository:
+This project is licensed under the MIT License.
 
-https://github.com/UtkarshRode/ai-supply-chain-control-center
+See LICENSE for details.
+
+<p align="center">
+  <strong>AI Supply Chain Control Center</strong>
+  <br>
+  From operational data to actionable risk intelligence.
+</p>
