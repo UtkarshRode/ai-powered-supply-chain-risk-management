@@ -4,9 +4,10 @@ import IORedis from "ioredis";
 import prisma from "../config/database";
 import { analyzeOrderRisk } from "../services/risk-analysis.service";
 
-const connection = new IORedis({
-  host: process.env.REDIS_HOST || "localhost",
-  port: Number(process.env.REDIS_PORT || 6379),
+const redisUrl =
+  process.env.REDIS_URL || "redis://localhost:6379";
+
+const connection = new IORedis(redisUrl, {
   maxRetriesPerRequest: null,
 });
 
